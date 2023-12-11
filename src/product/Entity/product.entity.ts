@@ -22,6 +22,9 @@ export class ProductEntity extends BaseEntity {
   @Column()
   categories: ProductCategory;
 
+  @Column({ default: '' })
+  productImgUrl: string;
+
   @CreateDateColumn({
     type: 'timestamp',
     default: () => 'CURRENT_TIMESTAMP(6)',

@@ -3,7 +3,11 @@ import { ProductEntity } from './Entity/product.entity';
 import { DataSource, Repository } from 'typeorm';
 import { CreateProductDto } from './Dto/create-product.dto';
 import { ProductCategory } from './Enum/product-type.enum';
-
+import * as AWS from 'aws-sdk';
+const s3 = new AWS.S3({
+  accessKeyId: '084893274565',
+  secretAccessKey: 'Dydakzpt1!',
+});
 @Injectable()
 export class ProductService {
   private productRepository: Repository<ProductEntity>;
@@ -17,6 +21,7 @@ export class ProductService {
 
   async createProduct(
     createProductDto: CreateProductDto,
+    file: Express.Multer.File,
   ): Promise<ProductEntity> {
     const { categories, price, productName } = createProductDto;
     const insertedData = this.productRepository.create({
@@ -25,6 +30,7 @@ export class ProductService {
       productName,
     });
     await this.productRepository.save(insertedData);
+
     return insertedData;
   }
 }
