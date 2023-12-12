@@ -14,10 +14,6 @@ import { ProductEntity } from './Entity/product.entity';
 import { CreateProductDto } from './Dto/create-product.dto';
 import { ProductStatusValidationPipe } from './Pipe/product-status-validation.pipe';
 import { FileInterceptor } from '@nestjs/platform-express';
-import * as AWS from 'aws-sdk';
-import * as config from 'config';
-
-const awsConfig = config.get('aws');
 
 @Controller('product')
 export class ProductController {
@@ -35,25 +31,6 @@ export class ProductController {
     @Body() createProductDto: CreateProductDto,
     @UploadedFile() file: Express.Multer.File,
   ): Promise<ProductEntity> {
-    AWS.config.update({
-      region: 'ap-northeast-2',
-      credentials: {
-        accessKeyId: awsConfig.accessKeyId,
-        secretAccessKey: awsConfig.secretAccessKey,
-      },
-    });
-    try {
-      const upload = await new AWS.S3()
-        .putObject({
-          Key: `${Date.now() + file.originalname}`,
-          Body: file.buffer,
-          Bucket: awsConfig.bucketName,
-        })
-        .promise();
-      console.log(upload);
-    } catch (error) {
-      console.log(error);
-    }
     return this.productService.createProduct(createProductDto, file);
   }
 }
