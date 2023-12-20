@@ -34,26 +34,26 @@ export class ProductService {
       price,
       productName,
     });
-    await this.productRepository.save(insertedData);
-    AWS.config.update({
-      region: 'ap-northeast-2',
-      credentials: {
-        accessKeyId: awsConfig.accessKeyId,
-        secretAccessKey: awsConfig.secretAccessKey,
-      },
-    });
-    try {
-      const upload = await new AWS.S3()
-        .putObject({
-          Key: `${Date.now() + file.originalname}`,
-          Body: file.buffer,
-          Bucket: awsConfig.bucketName,
-        })
-        .promise();
-      console.log(upload);
-    } catch (error) {
-      console.log(error);
-    }
+    // await this.productRepository.save(insertedData);
+    // AWS.config.update({
+    //   region: 'ap-northeast-2',
+    //   credentials: {
+    //     accessKeyId: awsConfig.accessKeyId,
+    //     secretAccessKey: awsConfig.secretAccessKey,
+    //   },
+    // });
+    // try {
+    //   const upload = await new AWS.S3()
+    //     .putObject({
+    //       Key: `${Date.now() + file.originalname}`,
+    //       Body: file.buffer,
+    //       Bucket: awsConfig.bucketName,
+    //     })
+    //     .promise();
+    //   console.log(upload);
+    // } catch (error) {
+    //   console.log(error);
+    // }
     return insertedData;
   }
 }

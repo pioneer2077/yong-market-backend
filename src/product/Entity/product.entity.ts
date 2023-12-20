@@ -5,8 +5,11 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  JoinColumn,
+  OneToOne,
 } from 'typeorm';
 import { ProductCategory } from '../Enum/product-type.enum';
+import { Inventory } from 'src/inventory/entities/inventory.entity';
 
 @Entity()
 export class ProductEntity extends BaseEntity {
@@ -43,4 +46,7 @@ export class ProductEntity extends BaseEntity {
 
   // @Column()
   // userId: number;
+  @OneToOne(() => Inventory)
+  @JoinColumn()
+  profile: Inventory;
 }
