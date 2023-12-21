@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { ProductEntity } from './Entity/product.entity';
 import { DataSource, Repository } from 'typeorm';
 import { CreateProductDto } from './Dto/create-product.dto';
-import { ProductCategory } from './Enum/product-type.enum';
 import * as AWS from 'aws-sdk';
 
 import * as config from 'config';
@@ -34,6 +33,7 @@ export class ProductService {
       price,
       productName,
     });
+
     // await this.productRepository.save(insertedData);
     // AWS.config.update({
     //   region: 'ap-northeast-2',
