@@ -13,7 +13,4 @@ export class Inventory extends BaseEntity {
 
   @Column()
   large: number;
-
-  @Column()
-  xLarge: number;
 }
